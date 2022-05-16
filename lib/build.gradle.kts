@@ -38,7 +38,7 @@ plugins {
     `maven-publish`
 }
 
-version = "0.13.0-SNAPSHOT"
+version = "0.12.2"
 
 group = "com.robgreener"
 
