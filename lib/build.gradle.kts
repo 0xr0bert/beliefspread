@@ -36,13 +36,11 @@ plugins {
     `java-library`
 
     `maven-publish`
-
-    signing
 }
 
 version = "0.13.0-SNAPSHOT"
 
-group = "io.github.ragreener1"
+group = "com.robgreener"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -119,7 +117,7 @@ publishing {
             pom {
                 name.set("Belief spread")
                 description.set("A model of how beliefs and behaviours spread between agents")
-                url.set("https://github.com/ragreener1/beliefspread")
+                url.set("https://gitlab.com/belief-spread/beliefspread")
                 licenses {
                     license {
                         name.set("GNU General Public License, Version 3")
@@ -130,15 +128,15 @@ publishing {
                     developer {
                         id.set("ragreener1")
                         name.set("Robert Greener")
-                        email.set("rob@robgreener.com")
+                        email.set("me@r0bert.dev")
                     }
                 }
                 scm {
-                    connection.set("scm:git:https://github.com/ragreener1/belief-spread.git")
+                    connection.set("scm:git:https://gitlab.com/belief-spread/belief-spread.git")
                     developerConnection.set(
-                            "scm:git:https://github.com/ragreener1/belief-spread.git"
+                            "scm:git:https://gitlab.com/belief-spread/belief-spread.git"
                     )
-                    url.set("https://github.com/ragreener1/belief-spread/")
+                    url.set("https://gitlab.com/belief-spread/belief-spread/")
                 }
             }
         }
@@ -146,19 +144,17 @@ publishing {
 
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/ragreener1/beliefspread")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-            }
+	    name = "GitLab"
+	    url = uri("https://gitlab.com/api/v4/groups/beliefspread/-/packages/maven")
+	    credentials(HttpHeaderCredentials::class) {
+                name = "Job-Token"
+		value = System.getenv("CI_JOB_TOKEN")
+	    }
+	    authentication {
+	        create<HttpHeaderAuthentication>("header")
+	    }
         }
     }
-}
-
-signing {
-    useGpgCmd()
-    sign(publishing.publications["maven"])
 }
 
 tasks.dokkaHtml.configure { dokkaSourceSets { named("main") { includes.from("module.md") } } }
