@@ -38,7 +38,7 @@ plugins {
     `maven-publish`
 }
 
-version = "0.13.0"
+version = "0.13.1"
 
 group = "dev.r0bert"
 
