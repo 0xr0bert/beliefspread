@@ -16,20 +16,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread.core
+package dev.r0bert.beliefspread.core
 
 /**
- * Something with a name.
+ * This specifies that the API is unstable.
  *
  * @author Robert Greener
- * @since v0.0.1
+ * @since v0.13.0
  */
-interface Named {
-    /**
-     * The name of the [Object].
-     *
-     * @author Robert Greener
-     * @since v0.0.1
-     */
-    var name: String
-}
+@RequiresOptIn(message = "This API is experimental. It may be changed in the future.")
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.CONSTRUCTOR)
+annotation class UnstableAPI

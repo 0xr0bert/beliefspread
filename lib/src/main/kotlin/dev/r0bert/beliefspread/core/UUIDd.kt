@@ -16,15 +16,22 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread.core
+package dev.r0bert.beliefspread.core
+
+import java.util.*
 
 /**
- * This specifies that the API is unstable.
+ * Something with a [UUID].
  *
  * @author Robert Greener
- * @since v0.13.0
+ * @since v0.0.1
  */
-@RequiresOptIn(message = "This API is experimental. It may be changed in the future.")
-@Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.CONSTRUCTOR)
-annotation class UnstableAPI
+interface UUIDd {
+    /**
+     * The [UUID] of the [Object].
+     *
+     * @author Robert Greener
+     * @since v0.0.1
+     */
+    var uuid: UUID
+}

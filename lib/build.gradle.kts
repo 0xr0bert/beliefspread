@@ -40,7 +40,7 @@ plugins {
 
 version = "0.12.3"
 
-group = "io.github.ragreener"
+group = "dev.r0bert"
 
 repositories {
     // Use Maven Central for resolving dependencies.

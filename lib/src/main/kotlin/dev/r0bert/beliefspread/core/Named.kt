@@ -16,32 +16,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread.bdi
-
-import io.github.ragreener1.beliefspread.core.Agent
-import io.github.ragreener1.beliefspread.core.Belief
-import io.github.ragreener1.beliefspread.core.UnstableAPI
+package dev.r0bert.beliefspread.core
 
 /**
- * This is an [Agent] that makes decision using the BDI model.
+ * Something with a name.
  *
  * @author Robert Greener
- * @since v0.13.0
+ * @since v0.0.1
  */
-@UnstableAPI
-interface BDIAgent : Agent {
+interface Named {
     /**
-     * Chooses an action to perform at a given time.
+     * The name of the [Object].
      *
-     * This updates the action using [Agent.setAction].
-     *
-     * An action is any [io.github.ragreener1.beliefspread.core.Behaviour]
-     *
-     * @param time The time.
-     * @param beliefs The [Belief]s.
      * @author Robert Greener
-     * @since v0.13.0
+     * @since v0.0.1
      */
-    @UnstableAPI
-    fun chooseAction(time: UInt, beliefs: Collection<Belief>)
+    var name: String
 }

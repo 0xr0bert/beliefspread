@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread.core
+package dev.r0bert.beliefspread.core
 
 /**
  * An Agent which may exist in the model
