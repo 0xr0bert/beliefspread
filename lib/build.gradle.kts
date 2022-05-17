@@ -38,7 +38,7 @@ plugins {
     `maven-publish`
 }
 
-version = "0.12.3"
+version = "0.13.0"
 
 group = "io.github.ragreener"
 
