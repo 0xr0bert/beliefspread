@@ -16,22 +16,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread.core
-
-import java.util.*
+package dev.r0bert.beliefspread.core
 
 /**
- * Something with a [UUID].
+ * A Behaviour.
  *
  * @author Robert Greener
  * @since v0.0.1
  */
-interface UUIDd {
-    /**
-     * The [UUID] of the [Object].
-     *
-     * @author Robert Greener
-     * @since v0.0.1
-     */
-    var uuid: UUID
-}
+interface Behaviour : UUIDd, Named
