@@ -15,23 +15,12 @@
  * You should have received a copy of the GNU General Public LICENSE
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
-package dev.r0bert.beliefspread
+package dev.r0bert.beliefspread.core
 
-import java.util.UUID
-
-/** Something with a [UUID]
+/** A Behaviour.
   *
   * @author
   *   Robert Greener
   * @since v0.14.0
   */
-trait UUIDd {
-
-  /** The [UUID] of the [Object]
-    *
-    * @author
-    *   Robert Greener
-    * @since v0.14.0
-    */
-  var uuid: UUID
-}
+trait Behaviour extends UUIDd with Named {}
