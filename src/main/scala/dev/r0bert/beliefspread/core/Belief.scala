@@ -19,7 +19,7 @@ package dev.r0bert.beliefspread.core
 
 /** A Belief.
   */
-trait Belief {
+trait Belief extends Named with UUIDd {
 
   /** Gets the perception. Returns an optional [Double] if found.
     *
