@@ -107,4 +107,58 @@ trait Agent extends UUIDd {
     * @since v0.14.0
     */
   def contextualise(time: Int, b: Belief, beliefs: Iterable[Belief]): Double
+
+  /** Gets the friends of the [Agent].
+    *
+    * This gets the friends of the agent with their weight of connection.
+    *
+    * All weights are in the range [0, 1].
+    *
+    * @return
+    *   The friends with their weight of connection.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def getFriends(): Iterable[(Agent, Double)]
+
+  /** Set the weight of a friend of the [Agent].
+    *
+    * If they are not friends, this adds another [Agent] as a `friend` with a
+    * supplied `weight`.
+    *
+    * `weight` *must* be in the range [0, 1].
+    *
+    * If the `friend` already exists, the `weight` is overwritten.
+    *
+    * If the `weight` is [None], the `friend` is removed if they were friends.
+    *
+    * @param friend
+    *   The friend.
+    * @param weight
+    *   The weight.
+    * @throws IllegalArgumentException
+    *   If `weight` is not range [0, 1].
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  @throws(classOf[IllegalArgumentException])
+  def setFriendWeight(friend: Agent, weight: Option[Double]): Unit
+
+  /** Gets the weight of a friend of the [Agent].
+    *
+    * The weight will be in the range [0, 1].
+    *
+    * If they are not friends, returns [None].
+    *
+    * @param friend
+    *   The friend.
+    * @return
+    *   The weight, or [None] if they are not friends.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def getFriendWeight(friend: Agent): Option[Double]
 }
