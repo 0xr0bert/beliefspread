@@ -60,4 +60,29 @@ trait Agent extends UUIDd {
     */
   @throws(classOf[IllegalArgumentException])
   def setActivation(time: Int, belief: Belief, activation: Option[Double]): Unit
+
+  /** Gets the weighted relationship between [Belief]s `b1` and `b2`.
+    *
+    * This is the compatibility for holding `b2`, given that the [Agent] already
+    * holds `b1`.
+    *
+    * This is equal to the activation of `b1` ([Agent.getActivation]) multiplied
+    * by the relationship between `b1` and `b2` ([Belief.getRelationship]).
+    *
+    * Returns [None] if either activation of `b1` at time `t` is [None], or the
+    * relationship between `b1` and `b2` is [None].
+    *
+    * @param time
+    *   The time.
+    * @param b1
+    *   The first [Belief].
+    * @param b2
+    *   The second [Belief].
+    * @return
+    *   The weighted relationship.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def weightedRelationship(time: Int, b1: Belief, b2: Belief): Option[Double]
 }
