@@ -206,4 +206,31 @@ trait Agent extends UUIDd {
     * @since v0.14.0
     */
   def pressure(time: Int, belief: Belief): Double
+
+  /** Gets the change in activation for the [Agent] as a result of the
+    * [Behaviour] observed.
+    *
+    * This takes into account the beliefs that the agent already holds.
+    *
+    * @param time
+    *   The time.
+    * @param belief
+    *   The [Belief].
+    * @param beliefs
+    *   all the [Belief]s.
+    * @return
+    *   The change in activation.
+    * @see
+    *   Agent.pressure
+    * @see
+    *   Agent.contextualise
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def activationChange(
+      time: Int,
+      belief: Belief,
+      beliefs: Iterable[Belief]
+  ): Double
 }
