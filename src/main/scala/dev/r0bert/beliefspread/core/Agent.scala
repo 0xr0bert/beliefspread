@@ -233,4 +233,41 @@ trait Agent extends UUIDd {
       belief: Belief,
       beliefs: Iterable[Belief]
   ): Double
+
+  /** Gets the delta for a given [Belief].
+    *
+    * This is the value that the activation for the [Belief] changes by
+    * (multiplicatively) at every time step.
+    *
+    * This is a strictly positive value (i.e., > 0).
+    *
+    * @param belief
+    *   The [Belief].
+    * @return
+    *   The delta for the [Belief] and this [Agent].
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def getDelta(belief: Belief): Option[Double]
+
+  /** Sets the delta for a given [Belief].
+    *
+    * This is the value that the activation for the [Belief] changes by
+    * (multiplicatively) at every time step.
+    *
+    * If `delta` is [None], then this function removes `delta`.
+    *
+    * @param belief
+    *   The [Belief].
+    * @param delta
+    *   The new strictly positive delta.
+    * @throws IllegalArgumentException
+    *   If `delta` <= 0.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  @throws(classOf[IllegalArgumentException])
+  def setDelta(belief: Belief, delta: Option[Double]): Unit
 }
