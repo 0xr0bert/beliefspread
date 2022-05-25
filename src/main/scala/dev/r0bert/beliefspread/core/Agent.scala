@@ -189,4 +189,21 @@ trait Agent extends UUIDd {
     * @since v0.14.0
     */
   def setAction(time: Int, behaviour: Option[Behaviour]): Unit
+
+  /** Gets the pressure the [Agent] feels to adopt a [Belief] given the actions
+    * of their friends.
+    *
+    * This does not take into account the beliefs that the agent already holds.
+    *
+    * @param time
+    *   The time.
+    * @param belief
+    *   The [Belief].
+    * @return
+    *   The pressure.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def pressure(time: Int, belief: Belief): Double
 }
