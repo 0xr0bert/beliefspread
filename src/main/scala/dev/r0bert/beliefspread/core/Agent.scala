@@ -85,4 +85,26 @@ trait Agent extends UUIDd {
     * @since v0.14.0
     */
   def weightedRelationship(time: Int, b1: Belief, b2: Belief): Option[Double]
+
+  /** Gets the context for holding the [Belief] `b`.
+    *
+    * This is the compatibility for holding `b`, given all the beliefs the agent
+    * holds.
+    *
+    * This is the average of [Agent.weightedRelationship] for every [Belief] in
+    * existance.
+    *
+    * @param time
+    *   The time.
+    * @param b
+    *   The belief.
+    * @param beliefs
+    *   All the beliefs in existence.
+    * @return
+    *   The context.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def contextualise(time: Int, b: Belief, beliefs: Iterable[Belief]): Double
 }
