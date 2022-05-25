@@ -161,4 +161,32 @@ trait Agent extends UUIDd {
     * @since v0.14.0
     */
   def getFriendWeight(friend: Agent): Option[Double]
+
+  /** Gets the [Behaviour] the [Agent] performed at a given `time`.
+    *
+    * Returns [None] if nothing was performed.
+    *
+    * @param time
+    *   The time.
+    * @return
+    *   The [Behaviour] performed.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def getAction(time: Int): Option[Behaviour]
+
+  /** Sets the [Behaviour] the [Agent] performed at a given time.
+    *
+    * If [None], it unsets the [Behaviour]
+    *
+    * @param time
+    *   The time.
+    * @param behaviour
+    *   The [Behaviour].
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def setAction(time: Int, behaviour: Option[Behaviour]): Unit
 }
