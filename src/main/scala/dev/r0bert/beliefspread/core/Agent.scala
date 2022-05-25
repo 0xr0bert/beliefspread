@@ -270,4 +270,26 @@ trait Agent extends UUIDd {
     */
   @throws(classOf[IllegalArgumentException])
   def setDelta(belief: Belief, delta: Option[Double]): Unit
+
+  /** Updates the activation for a given `time` and [Belief].
+    *
+    * @param time
+    *   The time.
+    * @param belief
+    *   The [Belief].
+    * @param beliefs
+    *   All the [Belief]s in existance.
+    * @throws IllegalArgumentExcpetion
+    *   If [Agent.getActivation] for `time` and `belief` is [None], or if
+    *   [Agent.getDelta] for `belief` is [None].
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  @throws(classOf[IllegalArgumentException])
+  def updateActivation(
+      time: Int,
+      belief: Belief,
+      beliefs: Iterable[Belief]
+  ): Unit
 }
