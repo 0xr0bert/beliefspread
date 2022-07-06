@@ -4,7 +4,6 @@ packages:
 sources:
   - https://git.sr.ht/~ragreener1/beliefspread
 tasks:
-  - setup: |
-      cd beliefspread
   - test: |
+      cd beliefspread
       sbt clean test
