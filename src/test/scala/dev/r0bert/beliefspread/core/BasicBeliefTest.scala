@@ -205,4 +205,12 @@ class BasicBeliefTest extends munit.FunSuite {
     b1.setRelationship(b2, Some(-0.5))
     assertEquals(relationship.get(b2), Some(-0.5))
   }
+
+  test("equals when uuids equal") {
+    val uuid = UUID.randomUUID()
+    val b1 = BasicBelief("b1", uuid)
+    val b2 = BasicBelief("b2", uuid)
+
+    assertEquals(b1, b2)
+  }
 }
