@@ -160,4 +160,17 @@ class BasicBeliefTest extends munit.FunSuite {
     b1.setRelationship(b2, None)
     assertEquals(relationship.get(b2), None)
   }
+
+  test("setRelationship when too high") {
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val relationship = HashMap[Belief, Double]()
+    FieldUtils.writeField(b1, "relationship", relationship, true)
+
+    interceptMessage[IllegalArgumentException](
+      "relationship is greater than 1"
+    ) {
+      b1.setRelationship(b2, Some(2.0))
+    }
+  }
 }
