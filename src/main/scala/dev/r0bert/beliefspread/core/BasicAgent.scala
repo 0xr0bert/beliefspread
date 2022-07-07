@@ -73,4 +73,20 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       beliefs: Iterable[Belief]
   ): Double = ???
 
+  /** Compare equality between this [BasicAgent] and another [BasicAgent].
+    *
+    * They are equal iff. the [UUID] is equal.
+    *
+    * @param other
+    *   The other agent.
+    * @return
+    *   true if the [UUID] is equal.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  override def equals(other: Any): Boolean = other match {
+    case other: BasicAgent => this.uuid == other.uuid
+    case _                 => false
+  }
 }
