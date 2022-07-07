@@ -196,4 +196,13 @@ class BasicBeliefTest extends munit.FunSuite {
     b1.setRelationship(b2, Some(0.5))
     assertEquals(relationship.get(b2), Some(0.5))
   }
+
+  test("setRelationship when not exists") {
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val relationship = HashMap[Belief, Double]()
+    FieldUtils.writeField(b1, "relationship", relationship, true)
+    b1.setRelationship(b2, Some(-0.5))
+    assertEquals(relationship.get(b2), Some(-0.5))
+  }
 }
