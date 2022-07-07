@@ -56,7 +56,22 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       time: Int,
       belief: Belief,
       activation: Option[Double]
-  ): Unit = ???
+  ): Unit = activation match {
+    case Some(x) if x > 1.0 =>
+      throw IllegalArgumentException("new activation is greater than 1")
+    case Some(x) if x < -1.0 =>
+      throw IllegalArgumentException("new activation is less than -1")
+    case Some(x) => {
+      if (!this.activation.contains(time))
+        this.activation.put(time, HashMap())
+      this.activation.get(time).get.put(belief, x)
+    }
+    case None =>
+      this.activation.get(time) match {
+        case Some(x) => x.remove(belief)
+        case None    => None
+      }
+  }
 
   override def getFriendWeight(friend: Agent): Option[Double] = ???
 

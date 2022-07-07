@@ -81,4 +81,88 @@ class BasicAgentTest extends munit.FunSuite {
     FieldUtils.writeField(a, "activation", act, true)
     assertEquals(a.getActivation(2, b), None)
   }
+
+  test("setActivation delete when exists") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    val actAt2 = HashMap[Belief, Double]()
+    actAt2.put(b, 0.5)
+    act.put(2, actAt2)
+    FieldUtils.writeField(a, "activation", act, true)
+    a.setActivation(2, b, None)
+    assertEquals(actAt2.get(b), None)
+  }
+
+  test("setActivation delete when time exists but belief doesn't") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    val actAt2 = HashMap[Belief, Double]()
+    act.put(2, actAt2)
+    FieldUtils.writeField(a, "activation", act, true)
+    a.setActivation(2, b, None)
+    assertEquals(actAt2.get(b), None)
+  }
+
+  test("setActivation delete when not exists") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    FieldUtils.writeField(a, "activation", act, true)
+    a.setActivation(2, b, None)
+    assertEquals(act.get(2), None)
+  }
+
+  test("setActivation throws IllegalArgumentException when too high") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    interceptMessage[IllegalArgumentException](
+      "new activation is greater than 1"
+    ) {
+      a.setActivation(2, b, Some(2.0))
+    }
+  }
+
+  test("setActivation throws IllegalArgumentException when too low") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    interceptMessage[IllegalArgumentException](
+      "new activation is less than -1"
+    ) {
+      a.setActivation(2, b, Some(-2.0))
+    }
+  }
+
+  test("setActivation when exists") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    val actAt2 = HashMap[Belief, Double]()
+    actAt2.put(b, 0.5)
+    act.put(2, actAt2)
+    FieldUtils.writeField(a, "activation", act, true)
+    a.setActivation(2, b, Some(0.2))
+    assertEquals(actAt2.get(b), Some(0.2))
+  }
+
+  test("setActivation when time exists but belief doesn't") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    val actAt2 = HashMap[Belief, Double]()
+    act.put(2, actAt2)
+    FieldUtils.writeField(a, "activation", act, true)
+    a.setActivation(2, b, Some(0.2))
+    assertEquals(actAt2.get(b), Some(0.2))
+  }
+
+  test("setActivation when not exists") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    FieldUtils.writeField(a, "activation", act, true)
+    a.setActivation(2, b, Some(0.2))
+    assertEquals(act.get(2).get.get(b), Some(0.2))
+  }
 }
