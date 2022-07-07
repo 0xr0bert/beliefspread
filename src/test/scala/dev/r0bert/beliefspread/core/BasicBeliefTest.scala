@@ -123,4 +123,13 @@ class BasicBeliefTest extends munit.FunSuite {
         .isEmpty
     )
   }
+
+  test("getRelationship when exists") {
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val relationship = HashMap[Belief, Double]()
+    relationship.put(b2, 0.2)
+    FieldUtils.writeField(b1, "relationship", relationship, true)
+    assertEquals(b1.getRelationship(b2), Some(0.2))
+  }
 }
