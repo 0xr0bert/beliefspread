@@ -113,4 +113,14 @@ class BasicBeliefTest extends munit.FunSuite {
         .isEmpty)
     )
   }
+
+  test("relationship is empty on initialization") {
+    val belief = BasicBelief("belief")
+    assert(
+      FieldUtils
+        .readField(belief, "relationship", true)
+        .asInstanceOf[mutable.Map[Belief, Double]]
+        .isEmpty
+    )
+  }
 }
