@@ -8,4 +8,10 @@ class BasicAgentTest extends munit.FunSuite {
     val a = BasicAgent(uuid)
     assertEquals(a.uuid, uuid)
   }
+
+  test("constructor assigns random uuid") {
+    val a1 = BasicAgent()
+    val a2 = BasicAgent()
+    assertNotEquals(a1.uuid, a2.uuid)
+  }
 }

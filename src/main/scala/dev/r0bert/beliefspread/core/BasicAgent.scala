@@ -14,6 +14,16 @@ import java.util.UUID
   */
 class BasicAgent(override var uuid: UUID) extends Agent {
 
+  /** Create a new [BasicAgent] with a random [UUID]
+    *
+    * The [UUID] is generated using [UUID.randomUUID]
+    *
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  def this() = this(UUID.randomUUID)
+
   override def getActivation(time: Int, belief: Belief): Option[Double] = ???
 
   override def getAction(time: Int): Option[Behaviour] = ???
