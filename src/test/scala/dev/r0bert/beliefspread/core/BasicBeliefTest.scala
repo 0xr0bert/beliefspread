@@ -223,4 +223,10 @@ class BasicBeliefTest extends munit.FunSuite {
     val b1 = BasicBelief("b1")
     val b2 = BasicBelief("b2")
   }
+
+  test("test hashCode") {
+    val uuid = UUID.randomUUID()
+    val b = BasicBelief("b", uuid)
+    assertEquals(b.hashCode(), uuid.hashCode())
+  }
 }
