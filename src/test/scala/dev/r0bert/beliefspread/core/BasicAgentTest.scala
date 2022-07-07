@@ -33,4 +33,10 @@ class BasicAgentTest extends munit.FunSuite {
     val a2 = BasicAgent()
     assertNotEquals(a1, a2)
   }
+
+  test("test hashCode") {
+    val uuid = UUID.randomUUID
+    val a = BasicAgent(uuid)
+    assertEquals(a.hashCode, uuid.hashCode)
+  }
 }

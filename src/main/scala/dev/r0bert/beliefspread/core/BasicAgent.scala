@@ -89,4 +89,16 @@ class BasicAgent(override var uuid: UUID) extends Agent {
     case other: BasicAgent => this.uuid == other.uuid
     case _                 => false
   }
+
+  /** Gets the `hashCode` of the [BasicAgent].
+    *
+    * This is based solely on the [UUID].
+    *
+    * @return
+    *   The hashCode.
+    * @author
+    *   Robert Greener
+    * @since v0.14.0
+    */
+  override def hashCode(): Int = uuid.hashCode
 }
