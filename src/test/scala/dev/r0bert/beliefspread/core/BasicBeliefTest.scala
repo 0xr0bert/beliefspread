@@ -213,4 +213,9 @@ class BasicBeliefTest extends munit.FunSuite {
 
     assertEquals(b1, b2)
   }
+
+  test("equals when same object") {
+    val b1 = BasicBelief("b1")
+    assertEquals(b1, b1)
+  }
 }
