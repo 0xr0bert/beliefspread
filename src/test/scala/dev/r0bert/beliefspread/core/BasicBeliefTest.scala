@@ -43,4 +43,15 @@ class BasicBeliefTest extends munit.FunSuite {
     FieldUtils.writeField(belief, "perception", perception, true)
     assertEquals(belief.getPerception(behaviour), None)
   }
+
+  test("setPerception delete when exists") {
+    val belief = BasicBelief("belief")
+    val behaviour = BasicBehaviour("b")
+    val perception = HashMap[Behaviour, Double]()
+    perception.put(behaviour, 0.5)
+    FieldUtils.writeField(belief, "perception", perception, true)
+
+    belief.setPerception(behaviour, None)
+    assertEquals(perception.get(behaviour), None)
+  }
 }
