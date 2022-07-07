@@ -1,5 +1,7 @@
 package dev.r0bert.beliefspread.core
 
+import scala.collection.mutable;
+import scala.collection.mutable.HashMap;
 import java.util.UUID
 
 /** A [BasicAgent] is an implementation of [Agent].
@@ -14,6 +16,9 @@ import java.util.UUID
   */
 class BasicAgent(override var uuid: UUID) extends Agent {
 
+  private val activation: mutable.Map[Int, mutable.Map[Belief, Double]] =
+    HashMap()
+
   /** Create a new [BasicAgent] with a random [UUID]
     *
     * The [UUID] is generated using [UUID.randomUUID]
@@ -24,7 +29,11 @@ class BasicAgent(override var uuid: UUID) extends Agent {
     */
   def this() = this(UUID.randomUUID)
 
-  override def getActivation(time: Int, belief: Belief): Option[Double] = ???
+  override def getActivation(time: Int, belief: Belief): Option[Double] =
+    activation.get(time) match {
+      case Some(x) => x.get(belief)
+      case None    => None
+    }
 
   override def getAction(time: Int): Option[Behaviour] = ???
 
