@@ -218,4 +218,9 @@ class BasicBeliefTest extends munit.FunSuite {
     val b1 = BasicBelief("b1")
     assertEquals(b1, b1)
   }
+
+  test("equals when uuids not equal") {
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+  }
 }
