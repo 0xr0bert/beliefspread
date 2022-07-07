@@ -1,6 +1,7 @@
 package dev.r0bert.beliefspread.core
 
 import java.util.UUID
+import scala.collection.mutable
 import scala.collection.mutable.HashMap
 import org.apache.commons.lang3.reflect.FieldUtils
 
@@ -101,5 +102,15 @@ class BasicBeliefTest extends munit.FunSuite {
 
     belief.setPerception(behaviour, Some(0.2))
     assertEquals(perception.get(behaviour), Some(0.2))
+  }
+
+  test("perception is empty on initalization") {
+    val belief = BasicBelief("belief")
+    assert(
+      (FieldUtils
+        .readField(belief, "perception", true)
+        .asInstanceOf[mutable.Map[Behaviour, Double]]
+        .isEmpty)
+    )
   }
 }
