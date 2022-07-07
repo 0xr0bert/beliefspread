@@ -73,4 +73,12 @@ class BasicBeliefTest extends munit.FunSuite {
 
     interceptMessage[IllegalArgumentException]("perception is greater than 1")
   }
+
+  test("setPerception when too low") {
+    val belief = BasicBelief("belief")
+    val behaviour = BasicBehaviour("b")
+    val perception = HashMap[Behaviour, Double]()
+
+    interceptMessage[IllegalArgumentException]("perception is less than -1")
+  }
 }
