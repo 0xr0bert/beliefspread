@@ -64,4 +64,13 @@ class BasicBeliefTest extends munit.FunSuite {
     belief.setPerception(behaviour, None)
     assertEquals(perception.get(behaviour), None)
   }
+
+  test("setPerception when too high") {
+    val belief = BasicBelief("belief")
+    val behaviour = BasicBehaviour("b")
+    val perception = HashMap[Behaviour, Double]()
+    FieldUtils.writeField(belief, "perception", perception, true)
+
+    interceptMessage[IllegalArgumentException]("perception is greater than 1")
+  }
 }
