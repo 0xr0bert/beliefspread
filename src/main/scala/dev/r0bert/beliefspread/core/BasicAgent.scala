@@ -86,7 +86,12 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       time: Int,
       b: Belief,
       beliefs: Iterable[Belief]
-  ): Double = ???
+  ): Double = if (beliefs.isEmpty) 0.0
+  else
+    beliefs
+      .map(b2 => weightedRelationship(time, b, b2))
+      .flatten
+      .foldLeft(0.0)((acc, v) => acc + v) / beliefs.size
 
   override def pressure(time: Int, belief: Belief): Double = ???
 

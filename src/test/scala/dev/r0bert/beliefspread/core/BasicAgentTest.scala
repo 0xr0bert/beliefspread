@@ -4,6 +4,7 @@ import java.util.UUID
 import org.apache.commons.lang3.reflect.FieldUtils
 import scala.collection.mutable
 import scala.collection.mutable.HashMap
+import scala.collection.mutable.HashSet
 
 class BasicAgentTest extends munit.FunSuite {
   test("constructor assigns uuid") {
@@ -203,5 +204,55 @@ class BasicAgentTest extends munit.FunSuite {
     val b2 = BasicBelief("b2")
 
     assertEquals(a.weightedRelationship(2, b1, b2), None)
+  }
+
+  test("contextualise when beliefs empty returns 0") {
+    val b = BasicBelief("b")
+    val a = BasicAgent()
+    val beliefs = HashSet[Belief]()
+
+    assertEquals(a.contextualise(2, b, beliefs), 0.0)
+  }
+
+  test(
+    "contextualise when beliefs non-empty and all weightedRelationships non-null"
+  ) {
+    val a = BasicAgent()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val beliefs = HashSet[Belief](b1, b2)
+    a.setActivation(2, b1, Some(1))
+    a.setActivation(2, b2, Some(1))
+    b1.setRelationship(b1, Some(0.5))
+    b1.setRelationship(b2, Some(-0.75))
+
+    assertEquals(a.contextualise(2, b1, beliefs), -0.125)
+  }
+
+  test(
+    "contextualise when beliefs non-empty and not all weightedRelationships non-null"
+  ) {
+    val a = BasicAgent()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val beliefs = HashSet[Belief](b1, b2)
+    a.setActivation(2, b1, Some(0.5))
+    a.setActivation(2, b2, Some(1))
+    b1.setRelationship(b1, Some(1))
+
+    assertEquals(a.contextualise(2, b1, beliefs), 0.25)
+  }
+
+  test(
+    "contextualise when beliefs non-empty and all weightedRelationships null"
+  ) {
+    val a = BasicAgent()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+    val beliefs = HashSet[Belief](b1, b2)
+    a.setActivation(2, b1, Some(0.5))
+    a.setActivation(2, b2, Some(1))
+
+    assertEquals(a.contextualise(2, b1, beliefs), 0.0)
   }
 }
