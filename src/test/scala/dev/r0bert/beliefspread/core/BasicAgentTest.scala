@@ -255,4 +255,31 @@ class BasicAgentTest extends munit.FunSuite {
 
     assertEquals(a.contextualise(2, b1, beliefs), 0.0)
   }
+
+  test("getFriends is initialized empty") {
+    val agent = BasicAgent()
+    assert(
+      FieldUtils
+        .readField(agent, "friends", true)
+        .asInstanceOf[mutable.Map[Agent, Double]]
+        .isEmpty
+    )
+  }
+
+  test("getFriends when empty") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+    assertEquals(agent.getFriends(), friends.toList)
+    assert(agent.getFriends().isEmpty)
+  }
+
+  test("getFriends when not empty") {
+    val agent = BasicAgent()
+    val a2 = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(a2, 0.3)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    assertEquals(agent.getFriends(), friends.toList)
+  }
 }

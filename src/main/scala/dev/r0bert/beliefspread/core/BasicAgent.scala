@@ -19,6 +19,8 @@ class BasicAgent(override var uuid: UUID) extends Agent {
   private val activation: mutable.Map[Int, mutable.Map[Belief, Double]] =
     HashMap()
 
+  private val friends: mutable.Map[Agent, Double] = HashMap()
+
   /** Create a new [[BasicAgent]] with a random [[UUID]]
     *
     * The [[UUID]] is generated using [[UUID.randomUUID]]
@@ -99,7 +101,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
 
   override def setAction(time: Int, behaviour: Option[Behaviour]): Unit = ???
 
-  override def getFriends(): Iterable[(Agent, Double)] = ???
+  override def getFriends(): Iterable[(Agent, Double)] = friends.toList
 
   override def setDelta(belief: Belief, delta: Option[Double]): Unit = ???
 
