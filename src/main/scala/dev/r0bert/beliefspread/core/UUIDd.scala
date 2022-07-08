@@ -2,7 +2,7 @@ package dev.r0bert.beliefspread.core
 
 import java.util.UUID
 
-/** Something with a [UUID]
+/** Something with a [[UUID]]
   *
   * @author
   *   Robert Greener
@@ -10,7 +10,7 @@ import java.util.UUID
   */
 trait UUIDd {
 
-  /** The [UUID] of the [Object]
+  /** The [[UUID]] of the [[Object]]
     *
     * @author
     *   Robert Greener
