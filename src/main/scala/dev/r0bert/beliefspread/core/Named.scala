@@ -8,7 +8,7 @@ package dev.r0bert.beliefspread.core
   */
 trait Named {
 
-  /** The name of the [Object].
+  /** The name of the [[Object]].
     *
     * @author
     *   Robert Greener
