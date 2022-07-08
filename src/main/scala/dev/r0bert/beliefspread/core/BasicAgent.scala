@@ -40,7 +40,14 @@ class BasicAgent(override var uuid: UUID) extends Agent {
   override def getAction(time: Int): Option[Behaviour] = ???
 
   override def setFriendWeight(friend: Agent, weight: Option[Double]): Unit =
-    ???
+    weight match {
+      case Some(x) if x > 1 =>
+        throw IllegalArgumentException("weight greater than 1")
+      case Some(x) if x < 0 =>
+        throw IllegalArgumentException("weight less than 0")
+      case Some(x) => friends.put(friend, x)
+      case None    => friends.remove(friend)
+    }
 
   override def updateActivation(
       time: Int,

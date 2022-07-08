@@ -282,4 +282,96 @@ class BasicAgentTest extends munit.FunSuite {
     FieldUtils.writeField(agent, "friends", friends, true)
     assertEquals(agent.getFriends(), friends.toList)
   }
+
+  test("setFriendWeight when not exists and valid") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    agent.setFriendWeight(a2, Some(0.5))
+    assertEquals(friends.get(a2), Some(0.5))
+  }
+
+  test("setFriendWeight when exists and valid") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    friends.put(a2, 0.2)
+    agent.setFriendWeight(a2, Some(0.5))
+    assertEquals(friends.get(a2), Some(0.5))
+  }
+
+  test("setFriendWeight when exists and valid delete") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    friends.put(a2, 0.2)
+    agent.setFriendWeight(a2, None)
+    assertEquals(friends.get(a2), None)
+  }
+
+  test("setFriendWeight when not exists and valid delete") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    agent.setFriendWeight(a2, None)
+    assertEquals(friends.get(a2), None)
+  }
+
+  test("setFriendWeight when exists and too high") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    friends.put(a2, 0.2)
+    interceptMessage[IllegalArgumentException]("weight greater than 1") {
+      agent.setFriendWeight(a2, Some(1.1))
+    }
+    assertEquals(friends.get(a2), Some(0.2))
+  }
+
+  test("setFriendWeight when not exists and too high") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    interceptMessage[IllegalArgumentException]("weight greater than 1") {
+      agent.setFriendWeight(a2, Some(1.1))
+    }
+    assertEquals(friends.get(a2), None)
+  }
+
+  test("setFriendWeight when exists and too low") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    friends.put(a2, 0.2)
+    interceptMessage[IllegalArgumentException]("weight less than 0") {
+      agent.setFriendWeight(a2, Some(-0.1))
+    }
+    assertEquals(friends.get(a2), Some(0.2))
+  }
+
+  test("setFriendWeight when not exists and too low") {
+    val agent = BasicAgent()
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+
+    val a2 = BasicAgent()
+    interceptMessage[IllegalArgumentException]("weight less than 0") {
+      agent.setFriendWeight(a2, Some(-0.1))
+    }
+    assertEquals(friends.get(a2), None)
+  }
 }
