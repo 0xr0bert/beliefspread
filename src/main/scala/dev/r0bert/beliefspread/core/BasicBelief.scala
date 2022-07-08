@@ -4,14 +4,14 @@ import java.util.UUID
 import scala.collection.mutable
 import scala.collection.mutable.HashMap
 
-/** A [BasicBelief] is an implementation of [Belief].
+/** A [[BasicBelief]] is an implementation of [[Belief]].
   *
   * @param name
-  *   The name of the [BasicBelief].
+  *   The name of the [[BasicBelief]].
   * @param uuid
-  *   The [UUID] of the [BasicBelief].
+  *   The [[UUID]] of the [[BasicBelief]].
   * @constructor
-  *   Create a new [BasicBelief] with a `name` and `uuid`.
+  *   Create a new [[BasicBelief]] with a `name` and `uuid`.
   * @author
   *   Robert Greener
   * @since v0.14.0
@@ -21,12 +21,12 @@ class BasicBelief(override var name: String, override var uuid: UUID)
   private val perception: mutable.Map[Behaviour, Double] = HashMap()
   private val relationship: mutable.Map[Belief, Double] = HashMap()
 
-  /** Create a new [BasicBelief] with a random [UUID].
+  /** Create a new [[BasicBelief]] with a random [[UUID]].
     *
-    * [UUID.randomUUID] is used to randomly generate the [UUID].
+    * [[UUID.randomUUID]] is used to randomly generate the [[UUID]].
     *
     * @param name
-    *   The name of the [BasicBelief].
+    *   The name of the [[BasicBelief]].
     * @author
     *   Robert Greener
     * @since v0.14.0
@@ -63,14 +63,14 @@ class BasicBelief(override var name: String, override var uuid: UUID)
     case Some(x) => this.relationship.put(belief, x)
   }
 
-  /** Compare equality between this [BasicBelief] and another [BasicBelief].
+  /** Compare equality between this [[BasicBelief]] and another [[BasicBelief]].
     *
-    * They are equal iff. the [UUID] is equal.
+    * They are equal iff. the [[UUID]] is equal.
     *
     * @param other
-    *   The other [Any].
+    *   The other [[Any]].
     * @return
-    *   true If the [UUID] is equal.
+    *   true If the [[UUID]] is equal.
     * @author
     *   Robert Greener
     * @since v0.14.0
@@ -80,9 +80,9 @@ class BasicBelief(override var name: String, override var uuid: UUID)
     case _                  => false
   }
 
-  /** Get the `hashCode` of the [BasicBelief].
+  /** Get the `hashCode` of the [[BasicBelief]].
     *
-    * This is solely based on the [UUID].
+    * This is solely based on the [[UUID]].
     *
     * @return
     *   The hashCode.
