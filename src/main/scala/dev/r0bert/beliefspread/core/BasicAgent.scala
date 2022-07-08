@@ -50,7 +50,14 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       time: Int,
       b1: Belief,
       b2: Belief
-  ): Option[Double] = ???
+  ): Option[Double] = getActivation(time, b1) match {
+    case Some(x) =>
+      b1.getRelationship(b2) match {
+        case Some(y) => Some(x * y)
+        case None    => None
+      }
+    case None => None
+  }
 
   override def setActivation(
       time: Int,

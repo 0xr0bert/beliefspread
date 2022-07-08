@@ -165,4 +165,43 @@ class BasicAgentTest extends munit.FunSuite {
     a.setActivation(2, b, Some(0.2))
     assertEquals(act.get(2).get.get(b), Some(0.2))
   }
+
+  test("weightedRelationship when exists") {
+    val a = BasicAgent()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+
+    a.setActivation(2, b1, Some(0.5))
+    b1.setRelationship(b2, Some(0.1))
+
+    assertEquals(a.weightedRelationship(2, b1, b2), Some(0.05))
+  }
+
+  test("weightedRelationship when activation not exists") {
+    val a = BasicAgent()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+
+    b1.setRelationship(b2, Some(0.1))
+
+    assertEquals(a.weightedRelationship(2, b1, b2), None)
+  }
+
+  test("weightedRelationship when relationship not exists") {
+    val a = BasicAgent()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+
+    a.setActivation(2, b1, Some(0.5))
+
+    assertEquals(a.weightedRelationship(2, b1, b2), None)
+  }
+
+  test("weightedRelationship when activation and relationship not exists") {
+    val a = BasicAgent()
+    val b1 = BasicBelief("b1")
+    val b2 = BasicBelief("b2")
+
+    assertEquals(a.weightedRelationship(2, b1, b2), None)
+  }
 }
