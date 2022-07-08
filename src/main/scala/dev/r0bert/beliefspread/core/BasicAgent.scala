@@ -89,7 +89,8 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       }
   }
 
-  override def getFriendWeight(friend: Agent): Option[Double] = ???
+  override def getFriendWeight(friend: Agent): Option[Double] =
+    friends.get(friend)
 
   override def contextualise(
       time: Int,
