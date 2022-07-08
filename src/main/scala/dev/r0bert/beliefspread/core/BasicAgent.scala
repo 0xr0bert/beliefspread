@@ -4,12 +4,12 @@ import scala.collection.mutable;
 import scala.collection.mutable.HashMap;
 import java.util.UUID
 
-/** A [BasicAgent] is an implementation of [Agent].
+/** A [[BasicAgent]] is an implementation of [[Agent]].
   *
   * @param uuid
-  *   The [UUID] of the [BasicAgent].
+  *   The [[UUID]] of the [[BasicAgent]].
   * @constructor
-  *   Create a new [BasicAgent] with a supplied [UUID].
+  *   Create a new [[BasicAgent]] with a supplied [[UUID]].
   * @author
   *   Robert Greener
   * @since v0.14.0
@@ -19,9 +19,9 @@ class BasicAgent(override var uuid: UUID) extends Agent {
   private val activation: mutable.Map[Int, mutable.Map[Belief, Double]] =
     HashMap()
 
-  /** Create a new [BasicAgent] with a random [UUID]
+  /** Create a new [[BasicAgent]] with a random [[UUID]]
     *
-    * The [UUID] is generated using [UUID.randomUUID]
+    * The [[UUID]] is generated using [[UUID.randomUUID]]
     *
     * @author
     *   Robert Greener
@@ -104,14 +104,14 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       beliefs: Iterable[Belief]
   ): Double = ???
 
-  /** Compare equality between this [BasicAgent] and another [BasicAgent].
+  /** Compare equality between this [[BasicAgent]] and another [[BasicAgent]].
     *
-    * They are equal iff. the [UUID] is equal.
+    * They are equal iff. the [[UUID]] is equal.
     *
     * @param other
     *   The other agent.
     * @return
-    *   true if the [UUID] is equal.
+    *   true if the [[UUID]] is equal.
     * @author
     *   Robert Greener
     * @since v0.14.0
@@ -121,9 +121,9 @@ class BasicAgent(override var uuid: UUID) extends Agent {
     case _                 => false
   }
 
-  /** Gets the `hashCode` of the [BasicAgent].
+  /** Gets the `hashCode` of the [[BasicAgent]].
     *
-    * This is based solely on the [UUID].
+    * This is based solely on the [[UUID]].
     *
     * @return
     *   The hashCode.
