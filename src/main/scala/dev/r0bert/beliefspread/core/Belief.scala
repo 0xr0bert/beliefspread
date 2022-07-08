@@ -4,7 +4,7 @@ package dev.r0bert.beliefspread.core
   */
 trait Belief extends Named with UUIDd {
 
-  /** Gets the perception. Returns an optional [Double] if found.
+  /** Gets the perception. Returns an optional [[Double]] if found.
     *
     * The perception is the amount that an agent performing the behaviour can be
     * assumed to be driven by this belief.
