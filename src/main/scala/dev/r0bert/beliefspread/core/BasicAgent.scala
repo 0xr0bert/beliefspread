@@ -129,7 +129,13 @@ class BasicAgent(override var uuid: UUID) extends Agent {
 
   override def getFriends(): Iterable[(Agent, Double)] = friends.toList
 
-  override def setDelta(belief: Belief, delta: Option[Double]): Unit = ???
+  override def setDelta(belief: Belief, delta: Option[Double]): Unit =
+    delta match {
+      case None => this.delta.remove(belief)
+      case Some(d) if d <= 0 =>
+        throw IllegalArgumentException("delta not strictly positive")
+      case Some(d) => this.delta.put(belief, d)
+    }
 
   override def activationChange(
       time: Int,

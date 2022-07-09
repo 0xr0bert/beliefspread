@@ -614,4 +614,66 @@ class BasicAgentTest extends munit.FunSuite {
     FieldUtils.writeField(agent, "delta", delta, true)
     assertEquals(agent.getDelta(belief), None)
   }
+
+  test("setDelta when exists and valid") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    delta.put(belief, 1.1)
+    FieldUtils.writeField(agent, "delta", delta, true)
+    agent.setDelta(belief, Some(1.2))
+    assertEquals(agent.getDelta(belief), Some(1.2))
+  }
+
+  test("setDelta when exists and valid delete") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    delta.put(belief, 1.1)
+    FieldUtils.writeField(agent, "delta", delta, true)
+    agent.setDelta(belief, None)
+    assertEquals(agent.getDelta(belief), None)
+  }
+
+  test("setDelta when not exists and valid") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    FieldUtils.writeField(agent, "delta", delta, true)
+    agent.setDelta(belief, Some(1.2))
+    assertEquals(agent.getDelta(belief), Some(1.2))
+  }
+
+  test("setDelta when not exists and valid delete") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    FieldUtils.writeField(agent, "delta", delta, true)
+    agent.setDelta(belief, None)
+    assertEquals(agent.getDelta(belief), None)
+  }
+
+  test("setDelta when exists and too low") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    delta.put(belief, 1.1)
+    FieldUtils.writeField(agent, "delta", delta, true)
+
+    interceptMessage[IllegalArgumentException]("delta not strictly positive") {
+      agent.setDelta(belief, Some(-0.1))
+    }
+  }
+
+  test("setDelta when exists and valid delete") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    delta.put(belief, 1.1)
+    FieldUtils.writeField(agent, "delta", delta, true)
+
+    interceptMessage[IllegalArgumentException]("delta not strictly positive") {
+      agent.setDelta(belief, Some(-0.1))
+    }
+  }
 }
