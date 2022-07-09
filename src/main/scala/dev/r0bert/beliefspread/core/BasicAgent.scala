@@ -23,6 +23,8 @@ class BasicAgent(override var uuid: UUID) extends Agent {
 
   private val actions: mutable.Map[Int, Behaviour] = HashMap()
 
+  private val delta: mutable.Map[Belief, Double] = HashMap()
+
   /** Create a new [[BasicAgent]] with a random [[UUID]]
     *
     * The [[UUID]] is generated using [[UUID.randomUUID]]
@@ -117,7 +119,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
         .flatten
         .sum / friends.size
 
-  override def getDelta(belief: Belief): Option[Double] = ???
+  override def getDelta(belief: Belief): Option[Double] = delta.get(belief)
 
   override def setAction(time: Int, behaviour: Option[Behaviour]): Unit =
     behaviour match {
