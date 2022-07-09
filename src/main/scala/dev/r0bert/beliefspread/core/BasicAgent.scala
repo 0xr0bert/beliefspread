@@ -109,7 +109,11 @@ class BasicAgent(override var uuid: UUID) extends Agent {
 
   override def getDelta(belief: Belief): Option[Double] = ???
 
-  override def setAction(time: Int, behaviour: Option[Behaviour]): Unit = ???
+  override def setAction(time: Int, behaviour: Option[Behaviour]): Unit =
+    behaviour match {
+      case None    => actions.remove(time)
+      case Some(x) => actions.put(time, x)
+    }
 
   override def getFriends(): Iterable[(Agent, Double)] = friends.toList
 
