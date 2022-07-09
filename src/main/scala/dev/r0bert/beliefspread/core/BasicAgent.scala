@@ -21,6 +21,8 @@ class BasicAgent(override var uuid: UUID) extends Agent {
 
   private val friends: mutable.Map[Agent, Double] = HashMap()
 
+  private val actions: mutable.Map[Int, Behaviour] = HashMap()
+
   /** Create a new [[BasicAgent]] with a random [[UUID]]
     *
     * The [[UUID]] is generated using [[UUID.randomUUID]]
@@ -37,7 +39,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       case None    => None
     }
 
-  override def getAction(time: Int): Option[Behaviour] = ???
+  override def getAction(time: Int): Option[Behaviour] = actions.get(time)
 
   override def setFriendWeight(friend: Agent, weight: Option[Double]): Unit =
     weight match {
