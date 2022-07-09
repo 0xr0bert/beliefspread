@@ -517,4 +517,74 @@ class BasicAgentTest extends munit.FunSuite {
     FieldUtils.writeField(agent, "friends", friends, true)
     assertEquals(agent.pressure(2, belief), 0.2)
   }
+
+  test("activationChange when pressure positive") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+    val b1 = BasicBehaviour("b1")
+    val b2 = BasicBehaviour("b2")
+
+    f1.setAction(2, Some(b1))
+    f2.setAction(2, Some(b2))
+
+    val belief1 = BasicBelief("b1")
+    belief1.setPerception(b1, Some(0.2))
+    belief1.setPerception(b2, Some(0.3))
+
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    // Pressure is 0.2
+
+    val belief2 = BasicBelief("b2")
+
+    val beliefs = HashSet[Belief](belief1, belief2)
+    agent.setActivation(2, belief1, Some(1))
+    agent.setActivation(2, belief2, Some(1))
+    belief1.setRelationship(belief1, Some(0.5))
+    belief1.setRelationship(belief2, Some(-0.75))
+    // Contextualise is -0.125
+    assertEqualsDouble(
+      agent.activationChange(2, belief1, beliefs),
+      0.0875,
+      0.001
+    )
+  }
+
+  test("activationChange when pressure negative") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+    val b1 = BasicBehaviour("b1")
+    val b2 = BasicBehaviour("b2")
+
+    f1.setAction(2, Some(b1))
+    f2.setAction(2, Some(b2))
+
+    val belief1 = BasicBelief("b1")
+    belief1.setPerception(b1, Some(-0.2))
+    belief1.setPerception(b2, Some(-0.3))
+
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    // Pressure is -0.2
+
+    val belief2 = BasicBelief("b2")
+
+    val beliefs = HashSet[Belief](belief1, belief2)
+    agent.setActivation(2, belief1, Some(1))
+    agent.setActivation(2, belief2, Some(1))
+    belief1.setRelationship(belief1, Some(0.5))
+    belief1.setRelationship(belief2, Some(-0.75))
+    // Contextualise is -0.125
+    assertEqualsDouble(
+      agent.activationChange(2, belief1, beliefs),
+      -0.1125,
+      0.001
+    )
+  }
 }

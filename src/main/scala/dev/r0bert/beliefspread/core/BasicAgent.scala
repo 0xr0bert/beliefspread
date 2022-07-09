@@ -133,7 +133,10 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       time: Int,
       belief: Belief,
       beliefs: Iterable[Belief]
-  ): Double = ???
+  ): Double = pressure(time, belief) match {
+    case p if p > 0 => (1 + contextualise(time, belief, beliefs)) / 2.0 * p
+    case p          => (1 - contextualise(time, belief, beliefs)) / 2.0 * p
+  }
 
   /** Compare equality between this [[BasicAgent]] and another [[BasicAgent]].
     *
