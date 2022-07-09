@@ -675,4 +675,144 @@ class BasicAgentTest extends munit.FunSuite {
       agent.setDelta(belief, Some(-0.1))
     }
   }
+
+  test("updateActivation when previous activation None") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b")
+    val beliefs = HashSet[Belief]()
+
+    agent.setDelta(belief, Some(1.1))
+
+    interceptMessage[IllegalArgumentException](
+      "activation not calculated at previous time step"
+    ) {
+      agent.updateActivation(2, belief, beliefs)
+    }
+  }
+
+  test("updateActivation when delta None") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b")
+    val beliefs = HashSet[Belief]()
+
+    interceptMessage[IllegalArgumentException](
+      "delta for belief None"
+    ) {
+      agent.updateActivation(2, belief, beliefs)
+    }
+  }
+
+  test("updateActivation when new value in range") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+    val b1 = BasicBehaviour("b1")
+    val b2 = BasicBehaviour("b2")
+
+    f1.setAction(2, Some(b1))
+    f2.setAction(2, Some(b2))
+
+    val belief1 = BasicBelief("b1")
+    belief1.setPerception(b1, Some(0.2))
+    belief1.setPerception(b2, Some(0.3))
+
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    // Pressure is 0.2
+    assertEquals(agent.pressure(2, belief1), 0.2)
+
+    val belief2 = BasicBelief("b2")
+
+    val beliefs = HashSet[Belief](belief1, belief2)
+    agent.setActivation(2, belief1, Some(0.5))
+    agent.setActivation(2, belief2, Some(1.0))
+    belief1.setRelationship(belief1, Some(1.0))
+    belief1.setRelationship(belief2, Some(-0.75))
+    // Contextualise is 0.0625
+
+    // activationChange is 0.10625
+    agent.setDelta(belief1, Some(1.1))
+    agent.updateActivation(3, belief1, beliefs)
+    assertEqualsDouble(agent.getActivation(3, belief1).get, 0.65625, 0.0001)
+  }
+
+  test("updateActivation when new value too high") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+    val b1 = BasicBehaviour("b1")
+    val b2 = BasicBehaviour("b2")
+
+    f1.setAction(2, Some(b1))
+    f2.setAction(2, Some(b2))
+
+    val belief1 = BasicBelief("b1")
+    belief1.setPerception(b1, Some(0.2))
+    belief1.setPerception(b2, Some(0.3))
+
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    // Pressure is 0.2
+    assertEquals(agent.pressure(2, belief1), 0.2)
+
+    val belief2 = BasicBelief("b2")
+
+    val beliefs = HashSet[Belief](belief1, belief2)
+    agent.setActivation(2, belief1, Some(0.5))
+    agent.setActivation(2, belief2, Some(1.0))
+    belief1.setRelationship(belief1, Some(1.0))
+    belief1.setRelationship(belief2, Some(-0.75))
+    // Contextualise is 0.0625
+
+    // activationChange is 0.10625
+    agent.setDelta(belief1, Some(10000))
+    agent.updateActivation(3, belief1, beliefs)
+    assertEqualsDouble(agent.getActivation(3, belief1).get, 1.0, 0.0001)
+  }
+
+  test("updateActivation when new value too low") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+    val b1 = BasicBehaviour("b1")
+    val b2 = BasicBehaviour("b2")
+
+    f1.setAction(2, Some(b1))
+    f2.setAction(2, Some(b2))
+
+    val belief1 = BasicBelief("b1")
+    belief1.setPerception(b1, Some(0.2))
+    belief1.setPerception(b2, Some(0.3))
+
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    // Pressure is 0.2
+    assertEquals(agent.pressure(2, belief1), 0.2)
+
+    val belief2 = BasicBelief("b2")
+
+    val beliefs = HashSet[Belief](belief1, belief2)
+    agent.setActivation(2, belief1, Some(0.5))
+    agent.setActivation(2, belief2, Some(1.0))
+    belief1.setRelationship(belief1, Some(1.0))
+    belief1.setRelationship(belief2, Some(-0.75))
+    // Contextualise is 0.0625
+
+    // activationChange is 0.10625
+
+    // This is a total cheat to force activation really low, officially,
+    // delta cannot be less than 0, but it doesn't matter.
+
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    delta.put(belief1, -10000)
+    FieldUtils.writeField(agent, "delta", delta, true)
+    agent.updateActivation(3, belief1, beliefs)
+    assertEqualsDouble(agent.getActivation(3, belief1).get, -1.0, 0.0001)
+  }
 }

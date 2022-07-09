@@ -57,7 +57,30 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       time: Int,
       belief: Belief,
       beliefs: Iterable[Belief]
-  ): Unit = ???
+  ): Unit = {
+    val d = this.getDelta(belief) match {
+      case Some(x) => x
+      case None    => throw IllegalArgumentException("delta for belief None")
+    }
+
+    val a = this.getActivation(time - 1, belief) match {
+      case Some(x) => x
+      case None =>
+        throw IllegalArgumentException(
+          "activation not calculated at previous time step"
+        )
+    }
+
+    this.setActivation(
+      time,
+      belief,
+      Some(
+        (-1.0).max(
+          (1.0).min(d * a + this.activationChange(time - 1, belief, beliefs))
+        )
+      )
+    )
+  }
 
   override def weightedRelationship(
       time: Int,
