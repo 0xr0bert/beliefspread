@@ -105,7 +105,17 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       .flatten
       .foldLeft(0.0)((acc, v) => acc + v) / beliefs.size
 
-  override def pressure(time: Int, belief: Belief): Double = ???
+  override def pressure(time: Int, belief: Belief): Double =
+    if (friends.isEmpty) 0.0
+    else
+      friends
+        .map((a, w) =>
+          a.getAction(time)
+            .map(belief.getPerception(_).getOrElse(0.0))
+            .map(w * _)
+        )
+        .flatten
+        .sum / friends.size
 
   override def getDelta(belief: Belief): Option[Double] = ???
 

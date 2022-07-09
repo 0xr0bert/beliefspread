@@ -457,4 +457,64 @@ class BasicAgentTest extends munit.FunSuite {
     agent.setAction(2, None)
     assertEquals(actions.get(2), None)
   }
+
+  test("pressure when no friends") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b")
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    FieldUtils.writeField(agent, "friends", friends, true)
+    assertEquals(agent.pressure(2, belief), 0.0)
+  }
+
+  test("pressure when friends did nothing") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+
+    val belief = BasicBelief("b")
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    assertEquals(agent.pressure(2, belief), 0.0)
+  }
+
+  test("pressure when friends did something but perception is null") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+    val b1 = BasicBehaviour("b1")
+    val b2 = BasicBehaviour("b2")
+
+    f1.setAction(2, Some(b1))
+    f2.setAction(2, Some(b2))
+
+    val belief = BasicBelief("b")
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    assertEquals(agent.pressure(2, belief), 0.0)
+  }
+
+  test("pressure when friends did something") {
+    val agent = BasicAgent()
+    val f1 = BasicAgent()
+    val f2 = BasicAgent()
+    val b1 = BasicBehaviour("b1")
+    val b2 = BasicBehaviour("b2")
+
+    f1.setAction(2, Some(b1))
+    f2.setAction(2, Some(b2))
+
+    val belief = BasicBelief("b")
+    belief.setPerception(b1, Some(0.2))
+    belief.setPerception(b2, Some(0.3))
+
+    val friends: mutable.Map[Agent, Double] = HashMap()
+    friends.put(f1, 0.5)
+    friends.put(f2, 1.0)
+    FieldUtils.writeField(agent, "friends", friends, true)
+    assertEquals(agent.pressure(2, belief), 0.2)
+  }
 }
