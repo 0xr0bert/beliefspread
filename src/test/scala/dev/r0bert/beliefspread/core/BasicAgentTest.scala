@@ -665,11 +665,10 @@ class BasicAgentTest extends munit.FunSuite {
     }
   }
 
-  test("setDelta when exists and valid delete") {
+  test("setDelta when not exists and too low") {
     val agent = BasicAgent()
     val belief = BasicBelief("b1")
     val delta: mutable.Map[Belief, Double] = HashMap()
-    delta.put(belief, 1.1)
     FieldUtils.writeField(agent, "delta", delta, true)
 
     interceptMessage[IllegalArgumentException]("delta not strictly positive") {
