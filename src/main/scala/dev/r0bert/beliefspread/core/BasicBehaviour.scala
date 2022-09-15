@@ -4,9 +4,9 @@ import java.util.UUID
 
 /** A [[BasicBehaviour]] is an implementation of [[Behaviour]].
   *
-  * @param name
+  * @param nameIn
   *   The name of the [[BasicBehaviour]].
-  * @param uuid
+  * @param uuidIn
   *   The [[UUID]] of the [[BasicBehaviour]].
   * @constructor
   *   Create a new [[BasicBehaviour]] with a supplied `name` and `uuid`.
@@ -14,8 +14,13 @@ import java.util.UUID
   *   Robert Greener
   * @since v0.14.0
   */
-class BasicBehaviour(override var name: String, override var uuid: UUID)
-    extends Behaviour {
+class BasicBehaviour(nameIn: String, uuidIn: UUID) extends Behaviour {
+
+  /** @inheritdoc */
+  override var name: String = nameIn
+
+  /** @inheritdoc */
+  override var uuid: UUID = uuidIn
 
   /** Create a new [[BasicBehaviour]] with a random [[UUID]].
     *
