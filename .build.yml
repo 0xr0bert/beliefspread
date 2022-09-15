@@ -1,9 +1,0 @@
-image: archlinux
-packages:
-  - sbt
-sources:
-  - https://git.sr.ht/~ragreener1/beliefspread
-tasks:
-  - test: |
-      cd beliefspread
-      sbt clean test
