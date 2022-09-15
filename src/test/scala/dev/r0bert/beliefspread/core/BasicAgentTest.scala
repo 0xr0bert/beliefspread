@@ -671,6 +671,26 @@ class BasicAgentTest extends munit.FunSuite {
     assertEquals(agent.getDelta(belief), None)
   }
 
+  test("getDeltas when exists") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    delta.put(belief, 1.1)
+    FieldUtils.writeField(agent, "delta", delta, true)
+    val deltas = agent.getDeltas
+    assertEquals(deltas.size, 1)
+    assertEqualsDouble(deltas(belief), 1.1, 0.001)
+  }
+
+  test("getDeltas when not exists") {
+    val agent = BasicAgent()
+    val belief = BasicBelief("b1")
+    val delta: mutable.Map[Belief, Double] = HashMap()
+    FieldUtils.writeField(agent, "delta", delta, true)
+    val deltas = agent.getDeltas
+    assert(deltas.isEmpty)
+  }
+
   test("setDelta when exists and valid") {
     val agent = BasicAgent()
     val belief = BasicBelief("b1")
