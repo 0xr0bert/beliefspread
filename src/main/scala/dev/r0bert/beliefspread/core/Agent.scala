@@ -27,6 +27,18 @@ trait Agent extends UUIDd {
     */
   def getActivation(time: Int, belief: Belief): Option[Double]
 
+  /** Get the activations of an [[Agent]] towards all [[Belief]]s at all times.
+    *
+    * This is always between -1 and +1
+    *
+    * @return
+    *   The immutable activations.
+    * @author
+    *   Robert Greener
+    * @since v0.16.0
+    */
+  def getActivations: immutable.Map[Int, immutable.Map[Belief, Double]]
+
   /** Set the activation of an [[Agent]] towards a [[Belief]] at a given time.
     *
     * If the activation is [[None]], then the activation is deleted.

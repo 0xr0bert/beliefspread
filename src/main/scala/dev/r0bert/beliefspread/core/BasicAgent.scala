@@ -42,6 +42,11 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       case None    => None
     }
 
+  /** @inheritdoc */
+  override def getActivations
+      : immutable.Map[Int, immutable.Map[Belief, Double]] =
+    activation.map((k, v) => (k, v.toMap)).toMap
+
   override def getAction(time: Int): Option[Behaviour] = actions.get(time)
 
   /** @inheritdoc */
