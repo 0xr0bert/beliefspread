@@ -1,5 +1,6 @@
 package dev.r0bert.beliefspread.core
 
+import scala.collection.immutable;
 import scala.collection.mutable;
 import scala.collection.mutable.HashMap;
 import java.util.UUID
@@ -42,6 +43,9 @@ class BasicAgent(override var uuid: UUID) extends Agent {
     }
 
   override def getAction(time: Int): Option[Behaviour] = actions.get(time)
+
+  /** @inheritdoc */
+  override def getActions: immutable.Map[Int, Behaviour] = actions.toMap
 
   override def setFriendWeight(friend: Agent, weight: Option[Double]): Unit =
     weight match {
