@@ -83,6 +83,41 @@ class BasicAgentTest extends munit.FunSuite {
     assertEquals(a.getActivation(2, b), None)
   }
 
+  test("getActivations when exists") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    val actAt2 = HashMap[Belief, Double]()
+    actAt2.put(b, 0.5)
+    act.put(2, actAt2)
+    FieldUtils.writeField(a, "activation", act, true)
+    val activations = a.getActivations
+    assertEquals(activations.size, 1)
+    assertEquals(activations(2).size, 1)
+    assertEqualsDouble(activations(2)(b), 0.5, 0.001)
+  }
+
+  test("getActivations when time exists but belief doesn't") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    val actAt2 = HashMap[Belief, Double]()
+    act.put(2, actAt2)
+    FieldUtils.writeField(a, "activation", act, true)
+    val activations = a.getActivations
+    assertEquals(activations.size, 1)
+    assert(activations(2).isEmpty)
+  }
+
+  test("getActivations when not exists") {
+    val a = BasicAgent()
+    val b = BasicBelief("b")
+    val act = HashMap[Int, mutable.Map[Belief, Double]]()
+    FieldUtils.writeField(a, "activation", act, true)
+    val activations = a.getActivations
+    assert(activations.isEmpty)
+  }
+
   test("setActivation delete when exists") {
     val a = BasicAgent()
     val b = BasicBelief("b")

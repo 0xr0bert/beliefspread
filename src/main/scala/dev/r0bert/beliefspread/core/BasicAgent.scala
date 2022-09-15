@@ -1,5 +1,6 @@
 package dev.r0bert.beliefspread.core
 
+import scala.collection.immutable;
 import scala.collection.mutable;
 import scala.collection.mutable.HashMap;
 import java.util.UUID
@@ -40,6 +41,11 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       case Some(x) => x.get(belief)
       case None    => None
     }
+
+  /** @inheritdoc */
+  override def getActivations
+      : immutable.Map[Int, immutable.Map[Belief, Double]] =
+    activation.map((k, v) => (k, v.toMap)).toMap
 
   override def getAction(time: Int): Option[Behaviour] = actions.get(time)
 
