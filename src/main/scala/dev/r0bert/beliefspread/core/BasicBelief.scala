@@ -6,9 +6,9 @@ import scala.collection.mutable.HashMap
 
 /** A [[BasicBelief]] is an implementation of [[Belief]].
   *
-  * @param name
+  * @param nameIn
   *   The name of the [[BasicBelief]].
-  * @param uuid
+  * @param uuidIn
   *   The [[UUID]] of the [[BasicBelief]].
   * @constructor
   *   Create a new [[BasicBelief]] with a `name` and `uuid`.
@@ -16,8 +16,14 @@ import scala.collection.mutable.HashMap
   *   Robert Greener
   * @since v0.14.0
   */
-class BasicBelief(override var name: String, override var uuid: UUID)
-    extends Belief {
+class BasicBelief(nameIn: String, uuidIn: UUID) extends Belief {
+
+  /** @inheritdoc */
+  override var name: String = nameIn
+
+  /** @inheritdoc */
+  override var uuid: UUID = uuidIn
+
   private val perception: mutable.Map[Behaviour, Double] = HashMap()
   private val relationship: mutable.Map[Belief, Double] = HashMap()
 
@@ -33,9 +39,11 @@ class BasicBelief(override var name: String, override var uuid: UUID)
     */
   def this(name: String) = this(name, UUID.randomUUID)
 
+  /** @inheritdoc */
   override def getPerception(behaviour: Behaviour): Option[Double] =
     perception.get(behaviour)
 
+  /** @inheritdoc */
   override def setPerception(
       behaviour: Behaviour,
       perception: Option[Double]
@@ -48,9 +56,11 @@ class BasicBelief(override var name: String, override var uuid: UUID)
     case Some(x) => this.perception.put(behaviour, x)
   }
 
+  /** @inheritdoc */
   override def getRelationship(belief: Belief): Option[Double] =
     relationship.get(belief)
 
+  /** @inheritdoc */
   override def setRelationship(
       belief: Belief,
       relationship: Option[Double]

@@ -7,15 +7,18 @@ import java.util.UUID
 
 /** A [[BasicAgent]] is an implementation of [[Agent]].
   *
-  * @param uuid
-  *   The [[UUID]] of the [[BasicAgent]].
+  * @param uuidIn
+  *   {@inheritdoc} The [[UUID]] of the [[BasicAgent]].
   * @constructor
   *   Create a new [[BasicAgent]] with a supplied [[UUID]].
   * @author
   *   Robert Greener
   * @since v0.14.0
   */
-class BasicAgent(override var uuid: UUID) extends Agent {
+class BasicAgent(uuidIn: UUID) extends Agent {
+
+  /** @inheritdoc */
+  override var uuid: UUID = uuidIn
 
   private val activation: mutable.Map[Int, mutable.Map[Belief, Double]] =
     HashMap()
@@ -36,6 +39,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
     */
   def this() = this(UUID.randomUUID)
 
+  /** @inheritdoc */
   override def getActivation(time: Int, belief: Belief): Option[Double] =
     activation.get(time) match {
       case Some(x) => x.get(belief)
@@ -47,11 +51,13 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       : immutable.Map[Int, immutable.Map[Belief, Double]] =
     activation.map((k, v) => (k, v.toMap)).toMap
 
+  /** @inheritdoc */
   override def getAction(time: Int): Option[Behaviour] = actions.get(time)
 
   /** @inheritdoc */
   override def getActions: immutable.Map[Int, Behaviour] = actions.toMap
 
+  /** @inheritdoc */
   override def setFriendWeight(friend: Agent, weight: Option[Double]): Unit =
     weight match {
       case Some(x) if x > 1 =>
@@ -62,6 +68,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       case None    => friends.remove(friend)
     }
 
+  /** @inheritdoc */
   override def updateActivation(
       time: Int,
       belief: Belief,
@@ -91,6 +98,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
     )
   }
 
+  /** @inheritdoc */
   override def weightedRelationship(
       time: Int,
       b1: Belief,
@@ -104,6 +112,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
     case None => None
   }
 
+  /** @inheritdoc */
   override def setActivation(
       time: Int,
       belief: Belief,
@@ -125,9 +134,11 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       }
   }
 
+  /** @inheritdoc */
   override def getFriendWeight(friend: Agent): Option[Double] =
     friends.get(friend)
 
+  /** @inheritdoc */
   override def contextualise(
       time: Int,
       b: Belief,
@@ -139,6 +150,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       .flatten
       .foldLeft(0.0)((acc, v) => acc + v) / beliefs.size
 
+  /** @inheritdoc */
   override def pressure(time: Int, belief: Belief): Double =
     if (friends.isEmpty) 0.0
     else
@@ -151,16 +163,20 @@ class BasicAgent(override var uuid: UUID) extends Agent {
         .flatten
         .sum / friends.size
 
+  /** @inheritdoc */
   override def getDelta(belief: Belief): Option[Double] = delta.get(belief)
 
+  /** @inheritdoc */
   override def setAction(time: Int, behaviour: Option[Behaviour]): Unit =
     behaviour match {
       case None    => actions.remove(time)
       case Some(x) => actions.put(time, x)
     }
 
+  /** @inheritdoc */
   override def getFriends(): Iterable[(Agent, Double)] = friends.toList
 
+  /** @inheritdoc */
   override def setDelta(belief: Belief, delta: Option[Double]): Unit =
     delta match {
       case None => this.delta.remove(belief)
@@ -169,6 +185,7 @@ class BasicAgent(override var uuid: UUID) extends Agent {
       case Some(d) => this.delta.put(belief, d)
     }
 
+  /** @inheritdoc */
   override def activationChange(
       time: Int,
       belief: Belief,
