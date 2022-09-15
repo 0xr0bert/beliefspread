@@ -33,9 +33,11 @@ class BasicBelief(override var name: String, override var uuid: UUID)
     */
   def this(name: String) = this(name, UUID.randomUUID)
 
+  /** @inheritdoc */
   override def getPerception(behaviour: Behaviour): Option[Double] =
     perception.get(behaviour)
 
+  /** @inheritdoc */
   override def setPerception(
       behaviour: Behaviour,
       perception: Option[Double]
@@ -48,9 +50,11 @@ class BasicBelief(override var name: String, override var uuid: UUID)
     case Some(x) => this.perception.put(behaviour, x)
   }
 
+  /** @inheritdoc */
   override def getRelationship(belief: Belief): Option[Double] =
     relationship.get(belief)
 
+  /** @inheritdoc */
   override def setRelationship(
       belief: Belief,
       relationship: Option[Double]
