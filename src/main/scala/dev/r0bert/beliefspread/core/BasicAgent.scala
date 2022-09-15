@@ -167,6 +167,9 @@ class BasicAgent(uuidIn: UUID) extends Agent {
   override def getDelta(belief: Belief): Option[Double] = delta.get(belief)
 
   /** @inheritdoc */
+  override def getDeltas: immutable.Map[Belief, Double] = delta.toMap
+
+  /** @inheritdoc */
   override def setAction(time: Int, behaviour: Option[Behaviour]): Unit =
     behaviour match {
       case None    => actions.remove(time)

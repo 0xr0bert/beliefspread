@@ -259,6 +259,21 @@ trait Agent extends UUIDd {
     */
   def getDelta(belief: Belief): Option[Double]
 
+  /** Gets all of the deltas for the agent.
+    *
+    * This is the value that the activation for the [[Belief]] changes by
+    * (multiplicatively) at every time step.
+    *
+    * This is a strictly positive value (i.e., > 0).
+    *
+    * @return
+    *   An immutable map of the deltas.
+    * @author
+    *   Robert Greener
+    * @since v0.16.0
+    */
+  def getDeltas: immutable.Map[Belief, Double]
+
   /** Sets the delta for a given [[Belief]].
     *
     * This is the value that the activation for the [[Belief]] changes by
