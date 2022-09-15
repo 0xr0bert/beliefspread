@@ -5,7 +5,7 @@ lazy val root = project
   .settings(
     name := "beliefspread",
     organization := "dev.r0bert",
-    version := "0.15.0",
+    version := "0.16.0",
     scalaVersion := scala3Version,
     libraryDependencies ++= Seq(
       "org.scalameta" %% "munit" % "1.0.0-M6" % Test,
