@@ -420,6 +420,27 @@ class BasicAgentTest extends munit.FunSuite {
     assertEquals(agent.getAction(2), None)
   }
 
+  test("getActions when exists") {
+    val agent = BasicAgent()
+    val actions: mutable.Map[Int, Behaviour] = HashMap()
+    FieldUtils.writeField(agent, "actions", actions, true)
+    val behaviour = BasicBehaviour("b")
+    actions.put(2, behaviour)
+    actions.put(3, behaviour)
+    val actionsObs = agent.getActions
+    assertEquals(actionsObs.size, 2)
+    assertEquals(actionsObs(2), behaviour)
+    assertEquals(actionsObs(3), behaviour)
+  }
+
+  test("getActions when not exists") {
+    val agent = BasicAgent()
+    val actions: mutable.Map[Int, Behaviour] = HashMap()
+    FieldUtils.writeField(agent, "actions", actions, true)
+    val actionsObs = agent.getActions
+    assert(actionsObs.isEmpty)
+  }
+
   test("setAction when exists") {
     val agent = BasicAgent()
     val actions: mutable.Map[Int, Behaviour] = HashMap()

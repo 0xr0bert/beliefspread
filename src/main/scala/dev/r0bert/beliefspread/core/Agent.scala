@@ -1,5 +1,7 @@
 package dev.r0bert.beliefspread.core
 
+import scala.collection.immutable;
+
 /** An [Agent]] which may exist in the model
   *
   * @author
@@ -159,6 +161,16 @@ trait Agent extends UUIDd {
     * @since v0.14.0
     */
   def getAction(time: Int): Option[Behaviour]
+
+  /** Gets all of the [[Behaviour]]s that the [[Agent]] has performed.
+    *
+    * @return
+    *   an [[immutable.Map]] from time to the behaviour performed.
+    * @author
+    *   Robert Greener
+    * @since v0.16.0
+    */
+  def getActions: immutable.Map[Int, Behaviour]
 
   /** Sets the [[Behaviour]] the [[Agent]] performed at a given time.
     *
