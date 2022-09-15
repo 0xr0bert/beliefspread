@@ -177,7 +177,7 @@ class BasicAgent(uuidIn: UUID) extends Agent {
     }
 
   /** @inheritdoc */
-  override def getFriends(): Iterable[(Agent, Double)] = friends.toList
+  override def getFriends(): immutable.Map[Agent, Double] = friends.toMap
 
   /** @inheritdoc */
   override def setDelta(belief: Belief, delta: Option[Double]): Unit =
