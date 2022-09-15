@@ -305,7 +305,7 @@ class BasicAgentTest extends munit.FunSuite {
     val agent = BasicAgent()
     val friends: mutable.Map[Agent, Double] = HashMap()
     FieldUtils.writeField(agent, "friends", friends, true)
-    assertEquals(agent.getFriends(), friends.toList)
+    assertEquals(agent.getFriends(), friends.toMap)
     assert(agent.getFriends().isEmpty)
   }
 
@@ -315,7 +315,7 @@ class BasicAgentTest extends munit.FunSuite {
     val friends: mutable.Map[Agent, Double] = HashMap()
     friends.put(a2, 0.3)
     FieldUtils.writeField(agent, "friends", friends, true)
-    assertEquals(agent.getFriends(), friends.toList)
+    assertEquals(agent.getFriends(), friends.toMap)
   }
 
   test("setFriendWeight when not exists and valid") {

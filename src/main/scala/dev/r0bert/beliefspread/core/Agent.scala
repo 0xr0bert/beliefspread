@@ -118,7 +118,7 @@ trait Agent extends UUIDd {
     *   Robert Greener
     * @since v0.14.0
     */
-  def getFriends(): Iterable[(Agent, Double)]
+  def getFriends(): immutable.Map[Agent, Double]
 
   /** Set the weight of a friend of the [[Agent]].
     *
