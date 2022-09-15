@@ -7,15 +7,18 @@ import java.util.UUID
 
 /** A [[BasicAgent]] is an implementation of [[Agent]].
   *
-  * @param uuid
-  *   The [[UUID]] of the [[BasicAgent]].
+  * @param uuidIn
+  *   {@inheritdoc} The [[UUID]] of the [[BasicAgent]].
   * @constructor
   *   Create a new [[BasicAgent]] with a supplied [[UUID]].
   * @author
   *   Robert Greener
   * @since v0.14.0
   */
-class BasicAgent(override var uuid: UUID) extends Agent {
+class BasicAgent(uuidIn: UUID) extends Agent {
+
+  /** @inheritdoc */
+  override var uuid: UUID = uuidIn
 
   private val activation: mutable.Map[Int, mutable.Map[Belief, Double]] =
     HashMap()
